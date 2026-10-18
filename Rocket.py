@@ -11,8 +11,8 @@ Background = pygame.image.load("background.jpg")
 
 Rocket_x = 300
 Rocket_y = 250
-#[up,left,down,right]
-Movement = [False,False,False,False]
+#[up,left,right,Diagonalr,DiagonalL]
+Movement = [False,False,False,False,False,]
 
 while True:
     for event in pygame.event.get():
@@ -25,6 +25,10 @@ while True:
                 Movement[1]=True
             elif event.key == K_d:
                 Movement[2]= True
+            elif event.key == K_q:
+                Movement[3] = True
+            elif event.key == K_e:
+                Movement[4] = True
             
         elif event.type == pygame.KEYUP:
             if event.key == K_w:
@@ -33,14 +37,23 @@ while True:
                 Movement[1]=False
             elif event.key == K_d:
                 Movement[2]= False
-
+            elif event.key == K_q:
+                Movement[3]= False
+            elif event.key == K_e:
+                Movement[4]= False
 
     if Movement[0]:
         Rocket_y -=10
     elif Movement[1]:
         Rocket_x -=10
     elif Movement[2]:
-        Rocket_x +=10   
+        Rocket_x +=10  
+    elif Movement[3]:
+        Rocket_y -=10
+        Rocket_x -=10
+    elif Movement[4]:
+        Rocket_y -=10
+        Rocket_x +=10     
     pygame.display.update()
     screen.blit(Background,(0,0))    
     screen.blit(Rocket,(Rocket_x,Rocket_y))
