@@ -23,15 +23,27 @@ while True:
                 Movement[0]=True
             elif event.key == K_a:
                 Movement[1]=True
+            elif event.key == K_d:
+                Movement[2]= True
             
         elif event.type == pygame.KEYUP:
             if event.key == K_w:
                 Movement[0]=False
+            elif event.key == K_a:
+                Movement[1]=False
+            elif event.key == K_d:
+                Movement[2]= False
+
+
     if Movement[0]:
         Rocket_y -=10
+    elif Movement[1]:
+        Rocket_x -=10
+    elif Movement[2]:
+        Rocket_x +=10   
     pygame.display.update()
     screen.blit(Background,(0,0))    
     screen.blit(Rocket,(Rocket_x,Rocket_y))
-    Rocket_y +=1
-    time.sleep(0.5) 
+    Rocket_y +=3
+    time.sleep(0.01) 
     pygame.display.update()
