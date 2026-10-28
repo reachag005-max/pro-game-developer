@@ -23,8 +23,8 @@ while True:
     print(ground_scroll)
 
    #restting the ground
-    if ground_scroll < -300 :
-        ground_scroll = 500
+    if ground_scroll < -50 :
+        ground_scroll = 0
     pygame.display.update()
 
         
