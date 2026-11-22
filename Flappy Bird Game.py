@@ -15,8 +15,10 @@ Gameover = False
 #groups 
 Pipegroup = pygame.sprite.Group()
 birdgroup = pygame.sprite.Group()
-pipefrequence= 1500
-lastpipe = pygame.time.get_ticks() - pipefrequence
+Pipefrequency= 1575
+lastpipe = pygame.time.get_ticks() - Pipefrequency
+
+
 
 
 class Pipe(pygame.sprite.Sprite):
@@ -33,6 +35,44 @@ class Pipe(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x -= scroll_speed
+class Bird(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.flappy = []
+        self.index = 0
+        self.count = 0
+        for i in range (1,4):
+            self.flappy1 = pygame.image.load(f"C:\\Users\\sgarg\\OneDrive\\Desktop\\Python pro game develpoer\\flappy\\Flappy {i}.png")
+            self.flappy.append(self.flappy1)
+        self.image = self.flappy[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.center = [x,y]
+        self.click = False
+        self.velocity = 0
+    def update(self):
+        if Flying == True:
+            self.velocity += 0.1 
+            print(self.velocity)
+            if self.velocity > 20:
+                self.velocity = 1
+
+            if self.rect.bottom < 500:
+                self.rect.y += self.velocity
+        if Gameover == False:
+            if pygame.mouse.get_pressed()[0] == 1 and self.click == False:
+                self.click = True
+                self.velocity -= 15
+                 
+
+
+
+
+
+#creating object bird
+Flappybird = Bird(100,HEIGHT//2)
+birdgroup.add(Flappybird)
+
+
 
 
 while True:
@@ -45,10 +85,12 @@ while True:
     Pipegroup.draw(screen)
     screen.blit(ground,(ground_scroll,500))
 
+    birdgroup.draw(screen)
+    birdgroup.update()
 
     if not Gameover and Flying:
         timenow = pygame.time.get_ticks()
-        if timenow - lastpipe > pipefrequence:
+        if timenow - lastpipe > Pipefrequency:
             
             Pipe_H=random.randint(-100,100)
             bottom_p = Pipe(WIDTH,(HEIGHT/2)+Pipe_H,-1)
@@ -63,11 +105,9 @@ while True:
         Pipegroup.update()
 
     ground_scroll -= scroll_speed
-    print(ground_scroll)
+
 
 #restting the ground
     if ground_scroll < -50 :
         ground_scroll = 0
     pygame.display.update()
-
-        
